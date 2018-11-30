@@ -5,7 +5,7 @@ const db = require('./../db/mysqlHelper.js')
 const config = require('./../config/config')
 
 const authorityCategory = {
-    /**
+/**
 * @api {post} /api/auth/cate/add 添加权限分类
 * @apiDescription 添加权限分类
 * @apiName Add

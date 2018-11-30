@@ -7,7 +7,138 @@ const uPattern = /^[a-zA-Z0-9_-]{4,16}$/
 const pPattern =  /[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/
 const mPattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[7|8])|(18[0,5-9]))\d{8}$/;
 const user = {
+/**
+* @api {post} /api/user/update/pwd 修改密码
+* @apiDescription 修改密码
+* @apiName updatePwd
+* @apiGroup User
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiParam {string} oldPwd 旧密码
+* @apiParam {string} newPwd 新密码
+* @apiParam {string} confirmPwd 确认密码
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/user/update/pwd
+* @apiVersion 1.0.0
+*/
+async updatePwd ( ctx ) {
+    let form = ctx.request.body
+    let result = retCode.Success
+    let auth = await com.jwtFun.checkAuth(ctx)
+    let isNull = await this.isPwdNull(form)
+    if(isNull.code == 1){
+        if(auth.code == 1){
+            form.oldPwd     = com.secrets.decypt(form.oldPwd,'base64', com.ivkey, 'hex', true)
+            form.newPwd     = com.secrets.decypt(form.newPwd,'base64', com.ivkey, 'hex', true)
+            form.confirmPwd = com.secrets.decypt(form.confirmPwd,'base64', com.ivkey, 'hex', true)
+            if(form.oldPwd == form.newPwd){
+                result = retCode.Fail
+                result.msg = '旧密码与新密码不能相等'
+            }else{
+                let isOldTrue = await usermodel.getByIdAndPassword({uid:auth.uid,password:com.md5(form.oldPwd)})
+                if(isOldTrue.errno){
+                    result = retCode.ServerError
+                    result.msg = '服务端错误'
+                }else{
+                    if(isOldTrue.length == 1){
+                        if(form.newPwd == form.confirmPwd){
+                            let resDa = await usermodel.updatePwd({
+                                uid : auth.uid,
+                                password: com.md5(form.newPwd)
+                            })
+                            if(resDa.errno){
+                                result = retCode.ServerError
+                                result.msg = '服务端错误'
+                            }else{
+                                db.setLog({
+                                    uid:auth.uid,
+                                    ped_operation: '修改密码',
+                                    operation_code:result.code,
+                                    operation_msg: result.codeMsg,
+                                    api_url:'/api/user/update/pwd'
+                                })
+                                delete result.uid
+                                result.msg = '密码修改成功'
+                            }
+                        }else{
+                            result = retCode.Fail
+                            result.msg = '密码不相等'
+                        }
+                    }else{
+                        result = retCode.Fail
+                        result.msg = '旧密码不正确'
+                    }
+                }
+            }
+            
+        }else{
+            return auth
+        }
+    }else{
+        result = isNull
+    }
+    
+    return result
+},
+//密码判空
+async isPwdNull ( form ) {
+    let result = retCode.Success
+    if(form.oldPwd == '' || form.oldPwd == undefined){
+        result = retCode.NotNullValue
+        result.msg = '旧密码不能为空'
+    }else if(form.newPwd == '' || form.newPwd == undefined){
+        result = retCode.NotNullValue
+        result.msg = '新密码不能为空'
+    }else if(form.confirmPwd == '' || form.confirmPwd == undefined){
+        result = retCode.NotNullValue
+        result.msg = '确认密码不能为空'
+    }
+    return result
+},
 
+/**
+* @api {post} /api/user/update 更新用户个人信息
+* @apiDescription 更新用户个人信息
+* @apiName update
+* @apiGroup User
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiParam {string} nickName 昵称
+* @apiParam {string} avatarUrl 头像
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/user/update
+* @apiVersion 1.0.0
+*/
+async updateUserInfo ( ctx ){
+    let form = ctx.request.body
+    let result = retCode.Success
+    let auth = await com.jwtFun.checkAuth(ctx)
+    if(auth.code == 1){
+        let bkdata = await usermodel.updateUserInfo({
+            nickName: form.nickName,
+            avatarUrl:form.avatarUrl,
+            uid: auth.uid
+        })
+        if(bkdata.errno){
+            result = retCode.ServerError
+            result.msg = '服务端错误'
+        }else{
+            db.setLog({
+                uid:result.uid,
+                ped_operation: '更新用户个人信息',
+                operation_code:result.code,
+                operation_msg: result.codeMsg,
+                api_url:'/api/user/update'
+            })
+            result.data = (await usermodel.getUserInfo(auth.uid))[0]
+            delete result.uid
+            result.msg = '修改成功'
+        }
+        return result
+    }else{
+        return auth
+    }
+},
 /**
 * @api {post} /api/user/get 用户查询
 * @apiDescription 用户查询
@@ -21,29 +152,6 @@ const user = {
 * @apiParam {int} pageIndex  页码
 * @apiParam {int} pageSize  每页条数
 * @apiVersion 1.0.0  
-* @apiSuccessExample {json} Success-Response:
-*  {
-*   "code": 1,
-*   "codeMsg": "SUCCESS OK",
-*   "data": {
-*       "list": [
-*           {
-*               "pk_id": "Y1001",
-*               "username": "test001",
-*               "pwd": "qweqwe",
-*               "phone_number": "17788889999",
-*               "nick_name": "测试一号",
-*               "avatar_url": "",
-*               "email": null,
-*               "create_datetime": "2018-11-29T03:44:20.000Z",
-*               "update_datetime": null,
-*               "is_delete": 0,
-*               "user_state": "AVAILABLE"
-*           }
-*       ],
-*       "total": 1
-*   }
-*}
 * @apiSampleRequest http://localhost:3000/api/user/get
 * @apiVersion 1.0.0
 */
@@ -67,6 +175,42 @@ const user = {
         return bkdata
     }else{
         return result
+    }
+  },
+/**
+* @api {get} /api/user/info 查询用户信息(个人)
+* @apiDescription 查询用户信息(个人)
+* @apiName info
+* @apiGroup User
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/user/info
+* @apiVersion 1.0.0
+*/
+  async getUserInfo ( ctx ) {
+    let result = retCode.Success
+    let auth = await com.jwtFun.checkAuth(ctx)
+    if(auth.code == 1){
+        let bkdata = await usermodel.getUserInfo(auth.uid)
+        if(bkdata.errno){
+            result = retCode.ServerError
+            result.msg = '服务端错误'
+        }else{
+            db.setLog({
+                uid:result.uid,
+                ped_operation: '查询用户个人信息',
+                operation_code:result.code,
+                operation_msg: result.codeMsg,
+                api_url:'/api/user/info'
+            })
+            delete result.uid
+            result.msg = '获取成功'
+            result.data = bkdata[0]
+        }
+        return result
+    }else{
+        return auth
     }
   },
 /**

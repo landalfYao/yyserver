@@ -16,5 +16,16 @@ router.post('/login', async (ctx, next) => {
   let result = await userBll.login(ctx)
   ctx.body = result;
 })
-
+router.get('/info', async (ctx, next) => {
+  let result = await userBll.getUserInfo(ctx)
+  ctx.body = result;
+})
+router.post('/update', async (ctx, next) => {
+  let result = await userBll.updateUserInfo(ctx)
+  ctx.body = result;
+})
+router.post('/update/pwd', async (ctx, next) => {
+  let result = await userBll.updatePwd(ctx)
+  ctx.body = result;
+})
 module.exports = router

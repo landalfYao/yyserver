@@ -176,15 +176,6 @@ define({ "api": [
       }
     },
     "version": "1.0.0",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " {\n  \"code\": 1,\n  \"codeMsg\": \"SUCCESS OK\",\n  \"data\": {\n      \"list\": [\n          {\n              \"pk_id\": \"Y1001\",\n              \"username\": \"test001\",\n              \"pwd\": \"qweqwe\",\n              \"phone_number\": \"17788889999\",\n              \"nick_name\": \"测试一号\",\n              \"avatar_url\": \"\",\n              \"email\": null,\n              \"create_datetime\": \"2018-11-29T03:44:20.000Z\",\n              \"update_datetime\": null,\n              \"is_delete\": 0,\n              \"user_state\": \"AVAILABLE\"\n          }\n      ],\n      \"total\": 1\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "sampleRequest": [
       {
         "url": "http://localhost:3000/api/user/get"
@@ -285,6 +276,161 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://localhost:3000/api/user/register"
+      }
+    ],
+    "filename": "pub/bll/user.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "get",
+    "url": "/api/user/info",
+    "title": "查询用户信息(个人)",
+    "description": "<p>查询用户信息(个人)</p>",
+    "name": "info",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/user/info"
+      }
+    ],
+    "filename": "pub/bll/user.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/api/user/update",
+    "title": "更新用户个人信息",
+    "description": "<p>更新用户个人信息</p>",
+    "name": "update",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "nickName",
+            "description": "<p>昵称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "avatarUrl",
+            "description": "<p>头像</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/user/update"
+      }
+    ],
+    "filename": "pub/bll/user.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/api/user/update/pwd",
+    "title": "修改密码",
+    "description": "<p>修改密码</p>",
+    "name": "updatePwd",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "oldPwd",
+            "description": "<p>旧密码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "newPwd",
+            "description": "<p>新密码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "confirmPwd",
+            "description": "<p>确认密码</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/user/update/pwd"
       }
     ],
     "filename": "pub/bll/user.js",

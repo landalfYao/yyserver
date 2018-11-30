@@ -91,7 +91,7 @@ var jwtFun = {
         return res
     },
     async sign(userToken) {
-        return jwt.sign(userToken, secretKey, {expiresIn: '2h'})
+        return jwt.sign(userToken, secretKey, {expiresIn: '0.05h'})
     },
     //token uid 校验
     async checkToken ( ctx ) {
@@ -127,6 +127,10 @@ var jwtFun = {
             //判断是否有权限
             if(user.payload.pk_id == config.SUPER_ADMINISTRATOR){
                 result.auth = true
+                result.uid = user.payload.pk_id
+            }else{
+                result = retCode.NoAuthority
+                result.msg = '您无权操作'
             }
         }else{
             result = user
