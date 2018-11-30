@@ -70,6 +70,18 @@ const user = {
     return await db.query(sql,params)
   },
 
+  //删除用户
+  async deleteUser ( uid ) {
+    let sql = 'UPDATE y_user SET is_delete=1 WHERE pk_id=?'
+    return await db.query(sql,[uid])
+  },
+  //禁用或启用用户
+  async stateUser ( ids,state ) {
+    let sql = 'UPDATE y_user SET user_state=? WHERE pk_id in (?)'
+    return await db.query(sql,[state,ids])
+  },
+
+
   async getLoginLimitLog( args ){
     let sql = 'SELECT COUNT(*) total FROM y_log WHERE create_datetime='
   }

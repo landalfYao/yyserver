@@ -47,6 +47,9 @@ const authorityCategory = {
             result = auth
         }
         return result
+    },
+    async update ( ctx ){
+        
     }
 }
 

@@ -9,7 +9,9 @@ const authorityCategory = {
     },
     async update ( args ){
         let sql = 'UPDATE y_authority_category set cate_name=?,remarks=?,sort=?,is_show=? where pk_id in (?)'
-        
+        let params = [args.cateName,args.remarks,args.sort,args.isShow,args.uid]
+        let result = await db.query(sql,params)
+        return result
     }
 }
 

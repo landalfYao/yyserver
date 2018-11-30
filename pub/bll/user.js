@@ -8,6 +8,69 @@ const pPattern =  /[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/
 const mPattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[7|8])|(18[0,5-9]))\d{8}$/;
 const user = {
 /**
+* @api {post} /api/user/state/disable 禁用用户
+* @apiDescription 禁用用户
+* @apiName disable
+* @apiGroup User
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiParam {string} ids 用户ID
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/user/state/disable
+* @apiVersion 1.0.0
+*/
+/**
+* @api {post} /api/user/state/available 启用用户
+* @apiDescription 启用用户
+* @apiName available
+* @apiGroup User
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiParam {string} ids 用户ID
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/user/state/available
+* @apiVersion 1.0.0
+*/
+async disableUser ( ctx,state ){
+    let form = ctx.request.body
+    let result = retCode.Success
+    let auth = await com.jwtFun.checkAuth(ctx)
+    if(auth.code == 1){
+        let ids = form.ids.split(',')
+        let temp = -1
+        let temp2 = -1
+        for(let i in ids){
+            if(ids[i] == auth.uid){
+                temp = i
+            }
+            if(ids[i] == 10000){
+                temp = i
+            }
+        }
+        if(temp!=-1){
+            result = retCode.Fail
+            result.msg = '无法将自己禁用，请重新选择禁用对象'
+        }else if(temp2 != -1){
+            result = retCode.Fail
+            result.msg = '无法禁用超级管理员'
+        }else{
+            let bkdata = await usermodel.stateUser(ids,state)
+            if(bkdata.errno){
+                result = retCode.ServerError
+                result.msg = '服务端错误'
+            }else{
+                result.msg = '成功禁用了'+bkdata.changedRows+'个用户'
+                result.data = bkdata.changedRows
+                delete result.uid
+            }
+        }
+    }else{
+        result = auth
+    }
+    return result
+},
+
+/**
 * @api {post} /api/user/update/pwd 修改密码
 * @apiDescription 修改密码
 * @apiName updatePwd
@@ -346,8 +409,7 @@ async updateUserInfo ( ctx ){
                             result.msg = '账户不可用,请联系管理'
                         }else{
                             const userToken = {
-                                pk_id: res[0].pk_id,
-                                username: res[0].username
+                                pk_id: res[0].pk_id
                             }
                             const token = await com.jwtFun.sign(userToken)
                             result = retCode.Success

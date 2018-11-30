@@ -91,7 +91,7 @@ var jwtFun = {
         return res
     },
     async sign(userToken) {
-        return jwt.sign(userToken, secretKey, {expiresIn: '0.05h'})
+        return jwt.sign(userToken, secretKey, {expiresIn: '1h'})
     },
     //token uid 校验
     async checkToken ( ctx ) {

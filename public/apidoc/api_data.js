@@ -282,6 +282,104 @@ define({ "api": [
     "groupTitle": "User"
   },
   {
+    "type": "post",
+    "url": "/api/user/state/available",
+    "title": "启用用户",
+    "description": "<p>启用用户</p>",
+    "name": "available",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/user/state/available"
+      }
+    ],
+    "filename": "pub/bll/user.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/api/user/state/disable",
+    "title": "禁用用户",
+    "description": "<p>禁用用户</p>",
+    "name": "disable",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/user/state/disable"
+      }
+    ],
+    "filename": "pub/bll/user.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "get",
     "url": "/api/user/info",
     "title": "查询用户信息(个人)",
