@@ -65,15 +65,15 @@ async disableUser ( ctx,state ){
                 result.msg = '服务端错误'
             }else{
                 
-                result.msg = '成功禁用了'+bkdata.changedRows+'个用户'
+                result.msg = '成功更新了'+bkdata.changedRows+'个用户'
                 result.data = bkdata.changedRows
-                delete result.uid
+                
             }
         }
     }else{
         result = auth
     }
-    return result
+    return com.filterReturn( result ) 
 },
 
 /**
@@ -150,7 +150,7 @@ async updatePwd ( ctx ) {
         result = isNull
     }
     
-    return result
+    return com.filterReturn( result ) 
 },
 //密码判空
 async isPwdNull ( form ) {
@@ -206,9 +206,9 @@ async updateUserInfo ( ctx ){
             delete result.uid
             result.msg = '修改成功'
         }
-        return result
+        return com.filterReturn( result ) 
     }else{
-        return auth
+        return com.filterReturn( auth ) 
     }
 },
 /**
@@ -246,12 +246,12 @@ async updateUserInfo ( ctx ){
                   api_url:'/api/user/get'
                 })
             }
-            return bkdata
+            return com.filterReturn( result ) 
         }else{
-            return result
+            return com.filterReturn( result ) 
         }
     }else{
-        return auth
+        return com.filterReturn( auth ) 
     }
     
   },
@@ -286,9 +286,9 @@ async updateUserInfo ( ctx ){
             result.msg = '获取成功'
             result.data = bkdata[0]
         }
-        return result
+        return com.filterReturn( result ) 
     }else{
-        return auth
+        return com.filterReturn( auth ) 
     }
   },
 /**
@@ -428,10 +428,10 @@ async updateUserInfo ( ctx ){
                             }
                             //生成token
                             const token = await com.jwtFun.sign(userToken)
-                            result = retCode.Success
-                            result.msg = '登录成功'
-                            result.token = token
-                            result.data = res[0]
+                            let rs = retCode.Success
+                            rs.msg = '登录成功'
+                            rs.token = token
+                            rs.data = res[0]
 
                             //设置登陆态
                             com.loginState.set('y'+res[0].pk_id,1)
@@ -439,10 +439,11 @@ async updateUserInfo ( ctx ){
                             db.setLog({
                                 uid:res[0].pk_id,
                                 ped_operation: '用户登录',
-                                operation_code:result.code,
-                                operation_msg: result.codeMsg,
+                                operation_code:rs.code,
+                                operation_msg: rs.codeMsg,
                                 api_url:'/api/user/login'
                             })
+                            return rs
                         }
                     }else if(res.length >1){
                         result = retCode.Fail

@@ -71,6 +71,272 @@
   },
   {
     "type": "post",
+    "url": "/api/auth/cate/del",
+    "title": "权限分类 删除",
+    "description": "<p>权限分类 删除</p>",
+    "name": "del",
+    "group": "Auth___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pk_id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/auth/cate/del"
+      }
+    ],
+    "filename": "pub/bll/authorityCategory.js",
+    "groupTitle": "Auth___"
+  },
+  {
+    "type": "post",
+    "url": "/api/auth/cate/update/onShow",
+    "title": "权限分类 显示",
+    "description": "<p>权限分类 显示</p>",
+    "name": "onShow",
+    "group": "Auth___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pk_id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/auth/cate/update/onShow"
+      }
+    ],
+    "filename": "pub/bll/authorityCategory.js",
+    "groupTitle": "Auth___"
+  },
+  {
+    "type": "post",
+    "url": "/api/auth/cate/update/sort",
+    "title": "权限分类 排序",
+    "description": "<p>权限分类 排序</p>",
+    "name": "sort",
+    "group": "Auth___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "sort",
+            "description": "<p>序号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "pkId",
+            "description": "<p>pk_id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/auth/cate/update/sort"
+      }
+    ],
+    "filename": "pub/bll/authorityCategory.js",
+    "groupTitle": "Auth___"
+  },
+  {
+    "type": "post",
+    "url": "/api/auth/cate/update/unShow",
+    "title": "权限分类 不显示",
+    "description": "<p>权限分类 不显示</p>",
+    "name": "unShow",
+    "group": "Auth___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pk_id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/auth/cate/update/unShow"
+      }
+    ],
+    "filename": "pub/bll/authorityCategory.js",
+    "groupTitle": "Auth___"
+  },
+  {
+    "type": "post",
+    "url": "/api/auth/cate/update",
+    "title": "修改权限分类",
+    "description": "<p>修改权限分类</p>",
+    "name": "update",
+    "group": "Auth___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "pkId",
+            "description": "<p>pk_id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "cateName",
+            "description": "<p>分类名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "remarks",
+            "description": "<p>备注</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/auth/cate/update"
+      }
+    ],
+    "filename": "pub/bll/authorityCategory.js",
+    "groupTitle": "Auth___"
+  },
+  {
+    "type": "post",
     "url": "/api/secret/encrypt",
     "title": "加密",
     "description": "<p>加密</p>",

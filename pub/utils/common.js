@@ -185,6 +185,12 @@ var commonSelect = {
     }
     
 }
+function filterReturn(result){
+    delete result.uid
+    delete result.auth
+    delete result.token
+    return result
+}
 
 module.exports = {
     secrets:secrets,
@@ -193,5 +199,6 @@ module.exports = {
     md5d:md5d,
     jwtFun : jwtFun,
     commonSelect:commonSelect,
-    loginState:loginState
+    loginState:loginState,
+    filterReturn:filterReturn
 }
