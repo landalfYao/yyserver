@@ -229,25 +229,31 @@ async updateUserInfo ( ctx ){
 */
   async getList ( ctx ) {
     ctx.request.body.tables = 'y_user'
-    let result = await com.commonSelect.getList( ctx )
-    if(result.args){
-        let userResult = await usermodel.getList(result.args,result.ct)
-        let bkdata = result.result
-        bkdata.data = userResult
-        let ct = result.ct.payload
-        if(ct){
-            db.setLog({
-              uid:ct.pk_id,
-              ped_operation: '查询用户信息',
-              operation_code:bkdata.code,
-              operation_msg: bkdata.codeMsg,
-              api_url:'/api/user/get'
-            })
+    let auth = await com.jwtFun.checkAuth(ctx)
+    if( auth.code == 1 ){
+        let result = await com.commonSelect.getList( ctx )
+        if(result.args){
+            let userResult = await usermodel.getList(result.args,result.ct)
+            let bkdata = result.result
+            bkdata.data = userResult
+            let ct = result.ct.payload
+            if(ct){
+                db.setLog({
+                  uid:ct.pk_id,
+                  ped_operation: '查询用户信息',
+                  operation_code:bkdata.code,
+                  operation_msg: bkdata.codeMsg,
+                  api_url:'/api/user/get'
+                })
+            }
+            return bkdata
+        }else{
+            return result
         }
-        return bkdata
     }else{
-        return result
+        return auth
     }
+    
   },
 /**
 * @api {get} /api/user/info 查询用户信息(个人)
