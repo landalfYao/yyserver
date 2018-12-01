@@ -11,6 +11,7 @@ const RetCode = {
     IncorrectFormat         : { code:  14, codeMsg: 'INCORRECT FORMAT'                    },   //格式不正确
     NotNullValue            : { code:  15, codeMsg: 'NOT NULL VALUE'                      },   //空值
     UnknownError            : { code: 100, codeMsg: 'UNKNOWN ERROR'                       },   //未知错误
+    LoginOverdue            : { code: 101, codeMsg: 'LOGIN OVERDUE'                       },   //登录态已过期
 
 };
 

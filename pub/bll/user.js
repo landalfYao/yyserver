@@ -54,11 +54,17 @@ async disableUser ( ctx,state ){
             result = retCode.Fail
             result.msg = '无法禁用超级管理员'
         }else{
+            for(let i in ids){
+                if(com.loginState.get('y'+ids[i]) == 1){
+                    com.loginState.remove('y'+ids[i])
+                }
+            }
             let bkdata = await usermodel.stateUser(ids,state)
             if(bkdata.errno){
                 result = retCode.ServerError
                 result.msg = '服务端错误'
             }else{
+                
                 result.msg = '成功禁用了'+bkdata.changedRows+'个用户'
                 result.data = bkdata.changedRows
                 delete result.uid
@@ -120,6 +126,9 @@ async updatePwd ( ctx ) {
                                     operation_msg: result.codeMsg,
                                     api_url:'/api/user/update/pwd'
                                 })
+                                if(com.loginState.get('y'+auth.uid) == 1){
+                                    com.loginState.remove('y'+auth.uid)
+                                }
                                 delete result.uid
                                 result.msg = '密码修改成功'
                             }
@@ -411,11 +420,16 @@ async updateUserInfo ( ctx ){
                             const userToken = {
                                 pk_id: res[0].pk_id
                             }
+                            //生成token
                             const token = await com.jwtFun.sign(userToken)
                             result = retCode.Success
                             result.msg = '登录成功'
                             result.token = token
                             result.data = res[0]
+
+                            //设置登陆态
+                            com.loginState.set('y'+res[0].pk_id,1)
+                            
                             db.setLog({
                                 uid:res[0].pk_id,
                                 ped_operation: '用户登录',

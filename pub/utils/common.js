@@ -9,6 +9,20 @@ const jwtKoa = require('koa-jwt')
 const secretKey = 'adfbrw32rfr23'
 const retCode = require('./../utils/retcode.js')
 const config = require('./../config/config')
+
+let loginState = {
+    data:{},
+    set(key,value){
+        this.data[key] = value
+    },
+    get(key){
+        return this.data[key]
+    },
+    remove(key){
+        delete this.data[key]
+    }
+}
+
 /**
  * @desc: 加密
  * @param: data: 待加密的内容； dataEncoding: 内容编码; key: 秘钥； 
@@ -98,26 +112,33 @@ var jwtFun = {
         let token = ctx.header.token
         let uid = ctx.header.uid
         let payload = null
-        if(token){
-            payload = await this.verify(token)
-            if(payload == undefined || payload == -1 || payload==''){
+        if(loginState.get('y'+uid) == 1){
+            if(token){
+                payload = await this.verify(token)
+                if(payload == undefined || payload == -1 || payload==''){
+                    let result = retCode.SessionExpired
+                    result.msg = 'token 错误'
+                    return result
+                }else{
+                    if(payload.pk_id == uid){
+                        return {pl:1,payload:payload}
+                    }else{
+                        let result = retCode.SessionExpired
+                        result.msg = 'token 校验未通过'
+                        return result
+                    }
+                }
+            }else{
                 let result = retCode.SessionExpired
                 result.msg = 'token 错误'
                 return result
-            }else{
-                if(payload.pk_id == uid){
-                    return {pl:1,payload:payload}
-                }else{
-                    let result = retCode.SessionExpired
-                    result.msg = 'token 校验未通过'
-                    return result
-                }
             }
         }else{
-            let result = retCode.SessionExpired
-            result.msg = 'token 错误'
+            let result = retCode.LoginOverdue
+            result.msg = '登录态已失效，请重新登录'
             return result
         }
+        
     },
     //校验权限
     async checkAuth ( ctx ) {
@@ -171,5 +192,6 @@ module.exports = {
     md5:md5,
     md5d:md5d,
     jwtFun : jwtFun,
-    commonSelect:commonSelect
+    commonSelect:commonSelect,
+    loginState:loginState
 }
