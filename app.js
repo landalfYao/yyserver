@@ -16,6 +16,7 @@ const index = require('./routes/index')
 const user = require('./routes/user')
 const secret = require('./routes/secret')
 const authorityCategory = require('./routes/authorityCategory')
+const authority = require('./routes/authority')
 const secretKey = 'adfbrw32rfr23'
 // error handler
 onerror(app)
@@ -66,6 +67,7 @@ app.use(index.routes(), index.allowedMethods())
 app.use(user.routes(), user.allowedMethods())
 app.use(secret.routes(), secret.allowedMethods())
 app.use(authorityCategory.routes(), authorityCategory.allowedMethods())
+app.use(authority.routes(),authority.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

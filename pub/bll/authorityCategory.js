@@ -53,7 +53,7 @@ const authorityCategory = {
         } else {
             result = auth
         }
-        return result
+        return com.filterReturn( result )  
     },
 /**
 * @api {post} /api/auth/cate/update 修改权限分类
