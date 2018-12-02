@@ -9,7 +9,7 @@ const authority = {
     },
     async update ( args ){
         let sql = 'UPDATE y_authority set name=?,api_url=?,cate_id=? where pk_id = ?'
-        let params = [args.name, args.apiUrl, args.cateId,args.uid]
+        let params = [args.name, args.apiUrl, args.cateId,args.pkId]
         let result = await db.query(sql,params)
         return result
     },

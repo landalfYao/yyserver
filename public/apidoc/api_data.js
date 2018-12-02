@@ -64,10 +64,80 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/auth/update",
+    "title": "修改权限",
+    "description": "<p>修改权限</p>",
+    "name": "authUpdate",
+    "group": "Auth___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>权限名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "apiUrl",
+            "description": "<p>权限接口</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "cateId",
+            "description": "<p>分类ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "pkId",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/auth/update"
+      }
+    ],
+    "filename": "pub/bll/authority.js",
+    "groupTitle": "Auth___"
+  },
+  {
+    "type": "post",
     "url": "/api/auth/cate/add",
     "title": "添加权限分类",
     "description": "<p>添加权限分类</p>",
-    "name": "Add",
+    "name": "cateAdd",
     "group": "Auth___",
     "header": {
       "fields": {

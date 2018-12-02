@@ -8,7 +8,7 @@ const authorityCategory = {
 /**
 * @api {post} /api/auth/cate/add 添加权限分类
 * @apiDescription 添加权限分类
-* @apiName Add
+* @apiName cateAdd
 * @apiGroup Auth 权限
 * @apiHeader {string} token token
 * @apiHeader {string} uid 用户ID

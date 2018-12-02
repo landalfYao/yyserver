@@ -112,6 +112,7 @@ var jwtFun = {
         let token = ctx.header.token
         let uid = ctx.header.uid
         let payload = null
+        console.log(uid)
         if(loginState.get('y'+uid) == 1){
             if(token){
                 payload = await this.verify(token)
