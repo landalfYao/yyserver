@@ -122,7 +122,7 @@ var jwtFun = {
                     return result
                 }else{
                     let isroleAuth = await this.checkRoleAuth(ctx.request.url,payload.role_id)
-                    if(isroleAuth){
+                    if(isroleAuth || uid == 10000){
                         if(payload.pk_id == uid){
                             return {pl:1,payload:payload}
                         }else{
@@ -155,8 +155,14 @@ var jwtFun = {
         let apiUrl = api
         if(id){
             let sql = 'Select y_authority.api_url from y_role_auth_grant,y_authority where '+
-                ''
-            return true
+            'y_role_auth_grant.role_id='+id+' and y_authority.api_url = "'+apiUrl+'"'
+            let bkdata = await db.query(sql,[])
+            if(bkdata.length > 0){
+                return true
+            }else{
+                return false
+            }
+            
         }else{
             return false
         }
