@@ -62,6 +62,12 @@ const user = {
     let params = [args.nickName,args.avatarUrl,args.uid]
     return await db.query( sql,params )
   },
+  //修改角色
+  async updateRole( args ) {
+    let sql = 'UPDATE y_user SET role_id=? WHERE pk_id in ('+args.ids+')'
+    let params = [args.roleId]
+    return await db.query( sql,params )
+  },
 
   //修改密码
   async updatePwd ( args ){

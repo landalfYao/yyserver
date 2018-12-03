@@ -9,6 +9,7 @@ const jwtKoa = require('koa-jwt')
 const secretKey = 'adfbrw32rfr23'
 const retCode = require('./../utils/retcode.js')
 const config = require('./../config/config')
+const db = require('./../db/mysqlHelper')
 
 let loginState = {
     data:{},
@@ -112,7 +113,6 @@ var jwtFun = {
         let token = ctx.header.token
         let uid = ctx.header.uid
         let payload = null
-        console.log(uid)
         if(loginState.get('y'+uid) == 1){
             if(token){
                 payload = await this.verify(token)
@@ -121,24 +121,46 @@ var jwtFun = {
                     result.msg = 'token 错误'
                     return result
                 }else{
-                    if(payload.pk_id == uid){
-                        return {pl:1,payload:payload}
+                    let isroleAuth = await this.checkRoleAuth(ctx.request.url,payload.role_id)
+                    if(isroleAuth){
+                        if(payload.pk_id == uid){
+                            return {pl:1,payload:payload}
+                        }else{
+                            let result = retCode.SessionExpired
+                            result.msg = 'token 校验未通过'
+                            return result
+                        }
                     }else{
-                        let result = retCode.SessionExpired
-                        result.msg = 'token 校验未通过'
+                        let result = retCode.NoAuthority
+                        result.msg = '对不起，您无权操作'
                         return result
                     }
+                    
                 }
             }else{
                 let result = retCode.SessionExpired
                 result.msg = 'token 错误'
                 return result
             }
+            
+            
         }else{
             let result = retCode.LoginOverdue
             result.msg = '登录态已失效，请重新登录'
             return result
         }
+        
+    },
+    async checkRoleAuth(api,id){
+        let apiUrl = api
+        if(id){
+            let sql = 'Select y_authority.api_url from y_role_auth_grant,y_authority where '+
+                ''
+            return true
+        }else{
+            return false
+        }
+         
         
     },
     //校验权限

@@ -2,7 +2,6 @@ const model = require('./../model/authority.js')
 const retCode = require('./../utils/retcode.js')
 const com = require('../utils/common')
 const db = require('./../db/mysqlHelper.js')
-const config = require('./../config/config')
 
 const authority = {
 /**

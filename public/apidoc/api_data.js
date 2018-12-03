@@ -1017,5 +1017,544 @@ define({ "api": [
     ],
     "filename": "pub/bll/user.js",
     "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/api/user/update/role",
+    "title": "修改角色",
+    "description": "<p>更新用户个人信息</p>",
+    "name": "updaterole",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "roleId",
+            "description": "<p>角色Id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/user/update/role"
+      }
+    ],
+    "filename": "pub/bll/user.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/add",
+    "title": "添加角色",
+    "description": "<p>添加角色</p>",
+    "name": "Add",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>角色名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "remarks",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "sort",
+            "description": "<p>序号</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/add"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/avaliable",
+    "title": "角色启用",
+    "description": "<p>角色启用</p>",
+    "name": "avaliable",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/avaliable"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/checked",
+    "title": "角色可选",
+    "description": "<p>角色可选</p>",
+    "name": "checked",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/checked"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/disable",
+    "title": "角色禁用",
+    "description": "<p>角色禁用</p>",
+    "name": "disable",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/disable"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/grant",
+    "title": "给角色赋予权限",
+    "description": "<p>给角色赋予权限</p>",
+    "name": "grant",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "roleId",
+            "description": "<p>角色ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "authIds",
+            "description": "<p>权限ID</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/grant"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/del",
+    "title": "角色删除",
+    "description": "<p>角色删除</p>",
+    "name": "roledel",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/del"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/update",
+    "title": "角色修改",
+    "description": "<p>修改角色</p>",
+    "name": "roleupdate",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>角色名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "remarks",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "sort",
+            "description": "<p>序号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "pkId",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/update"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/unchecked",
+    "title": "角色不可选",
+    "description": "<p>角色不可选</p>",
+    "name": "unchecked",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pkId</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/unchecked"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
+  },
+  {
+    "type": "post",
+    "url": "/api/role/ungrant",
+    "title": "给角色取消权限",
+    "description": "<p>给角色取消权限</p>",
+    "name": "ungrant",
+    "group": "role___",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ids",
+            "description": "<p>pk_id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:3000/api/role/ungrant"
+      }
+    ],
+    "filename": "pub/bll/roles.js",
+    "groupTitle": "role___"
   }
 ] });

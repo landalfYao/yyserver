@@ -249,7 +249,6 @@ const authorityCategory = {
 * @apiVersion 1.0.0
 */
     async getListByCate ( ctx ){
-        let form = ctx.request.body
         let result = retCode.Success
         let auth = await com.jwtFun.checkAuth(ctx)
         if (auth.auth) {
@@ -262,11 +261,15 @@ const authorityCategory = {
                 let arr = cate
                 //修改
                 for(let i in arr){
-                    if(arr[i].pk_id == aut[j]){
-
+                    arr[i].auths = []
+                    for(let j in aut){
+                        if(arr[i].pk_id == aut[j].cate_id){
+                            arr[i].auths.push(aut[j])
+                        }
                     }
+                    
                 }
-                result.data = bkdata
+                result.data = arr
                 result.msg = '查询成功'
             }
             db.setLog({

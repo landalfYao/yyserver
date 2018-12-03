@@ -211,6 +211,49 @@ async updateUserInfo ( ctx ){
         return com.filterReturn( auth ) 
     }
 },
+
+/**
+* @api {post} /api/user/update/role 修改角色
+* @apiDescription 更新用户个人信息
+* @apiName updaterole
+* @apiGroup User
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiParam {string} ids 用户id
+* @apiParam {int} roleId 角色Id
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/user/update/role
+* @apiVersion 1.0.0
+*/
+async updateRole ( ctx ){
+    let form = ctx.request.body
+    let result = retCode.Success
+    let auth = await com.jwtFun.checkAuth(ctx)
+    if(auth.code == 1){
+        let bkdata = await usermodel.updateRole({
+            ids: form.ids,
+            roleId:form.roleId
+        })
+        if(bkdata.errno){
+            result = retCode.ServerError
+            result.msg = '服务端错误'
+        }else{
+            db.setLog({
+                uid:result.uid,
+                ped_operation: '更新用户角色',
+                operation_code:result.code,
+                operation_msg: result.codeMsg,
+                api_url:'/api/user/update/role'
+            })
+            result.data = bkdata.changedRows
+            delete result.uid
+            result.msg = '成功修改了'+bkdata.changedRows+'条数据'
+        }
+        return com.filterReturn( result ) 
+    }else{
+        return com.filterReturn( auth ) 
+    }
+},
 /**
 * @api {post} /api/user/get 用户查询
 * @apiDescription 用户查询
@@ -424,7 +467,8 @@ async updateUserInfo ( ctx ){
                             result.msg = '账户不可用,请联系管理'
                         }else{
                             const userToken = {
-                                pk_id: res[0].pk_id
+                                pk_id: res[0].pk_id,
+                                role_id:res[0].role_id
                             }
                             //生成token
                             const token = await com.jwtFun.sign(userToken)
