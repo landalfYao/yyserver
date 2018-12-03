@@ -88,7 +88,7 @@ const authority = {
                     result.msg = '服务端错误'
                 }
             } else {
-                result.data = bkdata.changeRows
+                result.data = bkdata.changedRows
                 result.msg = '修改成功'
             }
             db.setLog({
@@ -102,6 +102,46 @@ const authority = {
             result = auth
         }
         return com.filterReturn( result )  
+    },
+/**
+* @api {post} /api/auth/del 删除权限
+* @apiDescription 删除权限
+* @apiName authDelete
+* @apiGroup Auth 权限
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiParam {string} ids pk_id
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/auth/del
+* @apiVersion 1.0.0
+*/
+    async del ( ctx ){
+        let form = ctx.request.body
+        let result = retCode.Success
+        let auth = await com.jwtFun.checkAuth(ctx)
+        if (auth.code == 1) {
+            let bkdata = await model.updateDel({
+                ids:form.ids
+            })
+            if (bkdata.errno) {
+                result = retCode.ServerError
+                result.msg = '服务端错误'
+            } else {
+                console.log(bkdata)
+                result.data = bkdata.changedRows
+                result.msg = '成功删除了'+bkdata.changedRows+'条数据'
+            }
+            db.setLog({
+                uid:auth.uid,
+                ped_operation: '权限删除',
+                operation_code:result.code,
+                operation_msg: result.codeMsg,
+                api_url:'/api/auth/del'
+            })
+        } else {
+            result = auth
+        }
+        return com.filterReturn( result )
     }
 }
 module.exports = authority

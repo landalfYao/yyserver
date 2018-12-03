@@ -13,6 +13,11 @@ const authority = {
         let result = await db.query(sql,params)
         return result
     },
+    async updateDel ( args ){
+        let sql = 'UPDATE y_authority set is_delete=1 where pk_id in ('+args.ids+')'
+        let result = await db.query(sql,[])
+        return result
+    },
 }
 
 module.exports = authority

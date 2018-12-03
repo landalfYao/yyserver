@@ -15,7 +15,7 @@ router.post('/update', async (ctx, next) => {
 })
 
 router.post('/del', async (ctx, next) => {
-  let result = await bll.updateDel(ctx)
+  let result = await bll.del(ctx)
   ctx.body = result;
 })
 

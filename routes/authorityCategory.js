@@ -33,4 +33,9 @@ router.post('/del', async (ctx, next) => {
   ctx.body = result;
 })
 
+router.get('/get', async (ctx, next) => {
+  let result = await bll.getListByCate(ctx)
+  ctx.body = result;
+})
+
 module.exports = router

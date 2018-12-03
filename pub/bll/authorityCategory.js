@@ -2,7 +2,6 @@ const model = require('./../model/authorityCategory.js')
 const retCode = require('./../utils/retcode.js')
 const com = require('../utils/common')
 const db = require('./../db/mysqlHelper.js')
-const config = require('./../config/config')
 
 const authorityCategory = {
 /**
@@ -236,6 +235,51 @@ const authorityCategory = {
             result = auth
         }
         return com.filterReturn( result )   
+    },
+
+/**
+* @api {get} /api/auth/cate/get 权限查询
+* @apiDescription 权限查询
+* @apiName Get
+* @apiGroup Auth
+* @apiHeader {string} token token
+* @apiHeader {string} uid 用户ID
+* @apiVersion 1.0.0  
+* @apiSampleRequest http://localhost:3000/api/auth/cate/get
+* @apiVersion 1.0.0
+*/
+    async getListByCate ( ctx ){
+        let form = ctx.request.body
+        let result = retCode.Success
+        let auth = await com.jwtFun.checkAuth(ctx)
+        if (auth.auth) {
+            let cate = await model.findCate()
+            let aut  = await model.findAuth()
+            if (cate.errno || aut.errno) {
+                result = retCode.ServerError
+                result.msg = '服务端错误'
+            } else {
+                let arr = cate
+                //修改
+                for(let i in arr){
+                    if(arr[i].pk_id == aut[j]){
+
+                    }
+                }
+                result.data = bkdata
+                result.msg = '查询成功'
+            }
+            db.setLog({
+                uid:auth.uid,
+                ped_operation: '权限查询',
+                operation_code:result.code,
+                operation_msg: result.codeMsg,
+                api_url:'/api/auth/cate/get'
+            })
+        } else {
+            result = auth
+        }
+        return com.filterReturn( result ) 
     }
 }
 

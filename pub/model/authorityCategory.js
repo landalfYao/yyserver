@@ -29,6 +29,16 @@ const authorityCategory = {
         let sql = 'UPDATE y_authority_category set is_delete=1 where pk_id in ('+ids+')'
         let result = await db.query(sql,[])
         return result
+    },
+    async findCate (  ) { 
+        let sql = 'SELECT * FROM y_authority_category WHERE is_delete=0'
+        let result = await db.query(sql,[])
+        return result
+    },
+    async findAuth (  ) { 
+        let sql = 'SELECT * FROM y_authority WHERE is_delete=0'
+        let result = await db.query(sql,[])
+        return result
     }
 }
 
