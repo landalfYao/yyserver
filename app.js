@@ -7,7 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const jwt = require('jsonwebtoken')
 const jwtKoa = require('koa-jwt')
-
+const cors = require('koa2-cors');
 const config = require('./pub/config/config.js');
 const session = require('koa-session');
 const RedisStore = require('koa2-session-redis');
@@ -61,6 +61,15 @@ const redis_conf = {
   })
 };
 
+
+    app.use(cors({
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization', 'Date'],
+    maxAge: 100,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous','token','uid'],
+}));
+
 app.use(session(redis_conf, app));
 
 // routes
@@ -76,9 +85,7 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
-// app.listen(config.SERVER_PORT, () => {
-//   console.log(`Starting at port ${config.SERVER_PORT}!`)
-// });
+
 
 
 module.exports = app
