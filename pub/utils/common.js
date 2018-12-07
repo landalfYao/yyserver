@@ -166,8 +166,6 @@ var jwtFun = {
         }else{
             return false
         }
-         
-        
     },
     //校验权限
     async checkAuth ( ctx ) {

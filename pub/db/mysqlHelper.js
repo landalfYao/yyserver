@@ -44,7 +44,7 @@ const db = {
                 (pageSize  ? pageSize:15);
 
             let list  = await this.query(sql,[]);
-            let total = await this.query('SELECT COUNT(*) total FROM '+tables);
+            let total = await this.query('SELECT COUNT(*) total FROM '+tables+' where '+where);
             if(total.length >= 0 && list.length >= 0){
                 return {list:list,total:total[0].total}
             }else{
