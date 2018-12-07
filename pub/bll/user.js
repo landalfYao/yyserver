@@ -289,7 +289,9 @@ async updateRole ( ctx ){
                   api_url:'/api/user/get'
                 })
             }
-            return com.filterReturn( result ) 
+            let re = retCode.Success
+            re.data = userResult
+            return com.filterReturn( re ) 
         }else{
             return com.filterReturn( result ) 
         }
